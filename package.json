@@ -1,0 +1,40 @@
+{
+  "name": "boleto.js",
+  "version": "0.0.1",
+  "description": "Renderizador de código de barras para boletos bancários",
+  "main": "src/boleto.js",
+  "scripts": {
+    "build": "npm run build-debug && npm run build-min",
+    "build-debug": "browserify src/boleto.js -s Boleto -t [babelify] -p [bannerify --file .banner ] -o dist/boleto.js",
+    "build-min": "uglifyjs dist/boleto.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/boleto.min.js",
+    "build-watch": "watchify src/boleto.js -s Boleto -t [babelify] -o dist/boleto.js -v",
+    "prepublish": "babel src --out-dir lib --loose all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guilhermearaujo/boleto.js.git"
+  },
+  "keywords": [
+    "boleto",
+    "código",
+    "barras",
+    "barcode"
+  ],
+  "author": "Guilherme Araújo <guilhermeama@gmail.com> (https://github.com/guilhermearaujo)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/guilhermearaujo/boleto.js/issues"
+  },
+  "homepage": "https://github.com/guilhermearaujo/boleto.js#readme",
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "babel-core": "^6.5.2",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-es2015-loose": "^7.0.0",
+    "babelify": "^7.2.0",
+    "bannerify": "1.0.1",
+    "browserify": "^13.0.0",
+    "uglify-js": "^2.4.24",
+    "watchify": "^3.4.0"
+  }
+}
