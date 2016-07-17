@@ -91,7 +91,7 @@ class Boleto {
    * Returns the verification digit of the barcode
    */
   checksum() {
-    this.barcode()[4];
+    return this.barcode()[4];
   }
 
   /**

@@ -133,7 +133,7 @@ var Boleto = function () {
 
 
   Boleto.prototype.checksum = function checksum() {
-    this.barcode()[4];
+    return this.barcode()[4];
   };
 
   /**
