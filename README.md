@@ -1,5 +1,7 @@
 # boleto.js
 
+[![npm version](https://badge.fury.io/js/boleto.js.svg)](https://badge.fury.io/js/boleto.js)
+
 Renderizador de código de barras para boletos bancários
 
 ## Utilização
