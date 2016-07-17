@@ -1,3 +1,9 @@
+/*!
+ * boleto.js v0.0.1
+ * https://github.com/guilhermearaujo/boleto.js
+ *
+ * Licensed MIT © Guilherme Araújo
+ */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Boleto = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
@@ -166,9 +172,9 @@ var Boleto = function () {
     return currency.symbol + ' ' + this.amount().replace('.', currency.decimal);
   };
 
-  Boleto.prototype.toSVG = function toSVG(element) {
+  Boleto.prototype.toSVG = function toSVG(selector) {
     var stripes = ITF.encode(this.barcode());
-    new _svg2.default(stripes).render(element);
+    new _svg2.default(stripes).render(selector);
   };
 
   return Boleto;
@@ -274,13 +280,15 @@ var SVG = function () {
 
   /**
    * Appends an SVG object and renders the barcode inside it
-   * @param {Object} element
+   * @param {Object} selector
    */
 
 
-  SVG.prototype.render = function render(element) {
+  SVG.prototype.render = function render(selector) {
+    var wrapper = document.querySelector(selector);
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    element.appendChild(svg);
+
+    wrapper.appendChild(svg);
 
     var pos = 0;
 

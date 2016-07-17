@@ -124,9 +124,9 @@ class Boleto {
     return currency.symbol + ' ' + this.amount().replace('.', currency.decimal);
   }
 
-  toSVG(element) {
+  toSVG(selector) {
     var stripes = ITF.encode(this.barcode());
-    new SVG(stripes).render(element);
+    new SVG(stripes).render(selector);
   }
 }
 

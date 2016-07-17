@@ -12,15 +12,14 @@ Inclua o script da biblioteca
 <script src="dist/boleto.min.js"></script>
 ```
 
-Crie uma instância de `Boleto` passando o número do boleto e o elemento onde ele deve ser renderizado.
+Crie uma instância de `Boleto` passando o número do boleto e o seletor do elemento onde ele deve ser renderizado.
 
 ```html
 <div id="boleto"></div>
 
 <script>
   var number = '34195.00008 01233.203189 64221.470004 5 84410000002000';
-  var element = document.getElementById('boleto');
-  new Boleto(number).toSVG(element);
+  new Boleto(number).toSVG('#boleto');
 </script>
 ```
 

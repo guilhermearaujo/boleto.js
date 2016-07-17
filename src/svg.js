@@ -11,11 +11,13 @@ class SVG {
 
   /**
    * Appends an SVG object and renders the barcode inside it
-   * @param {Object} element
+   * @param {Object} selector
    */
-  render(element) {
+  render(selector) {
+    var wrapper = document.querySelector(selector);
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    element.appendChild(svg);
+
+    wrapper.appendChild(svg);
 
     var pos = 0;
 
