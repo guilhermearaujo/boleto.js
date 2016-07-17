@@ -1,6 +1,6 @@
 {
   "name": "boleto.js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Renderizador de código de barras para boletos bancários",
   "main": "src/boleto.js",
   "scripts": {
