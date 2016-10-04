@@ -2,6 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/boleto.js.svg)](https://badge.fury.io/js/boleto.js)
 [![Build Status](https://travis-ci.org/guilhermearaujo/boleto.js.svg?branch=master)](https://travis-ci.org/guilhermearaujo/boleto.js)
+[![Code Climate](https://codeclimate.com/github/guilhermearaujo/boleto.js/badges/gpa.svg)](https://codeclimate.com/github/guilhermearaujo/boleto.js)
 
 Renderizador de código de barras para boletos bancários
 
