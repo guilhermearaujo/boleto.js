@@ -3,7 +3,7 @@ var rewire = require('rewire');
 
 // Boleto.js tests
 
-var Boleto = require('../src/boleto');
+var Boleto = rewire('../src/boleto');
 
 var validBankslipNumber = '34195000080123320318964221470004584410000002000';
 var invalidBankslipNumber = '34195000080123320318964221470004584410000002001';
@@ -11,6 +11,8 @@ var invalidBankslipNumber = '34195000080123320318964221470004584410000002001';
 var bankslip = new Boleto(validBankslipNumber);
 
 describe('Boleto.js', function() {
+
+  // Public methods
   describe('#constructor()', function() {
     it('should return a valid Boleto object when a valid bankslip code is passed', function() {
       var bankslip = new Boleto(validBankslipNumber);
@@ -90,6 +92,19 @@ describe('Boleto.js', function() {
   describe('#prettyAmount()', function() {
     it('should return correct, formatted amount', function() {
       expect(bankslip.prettyAmount()).to.equal('R$ 20,00');
+    });
+  });
+
+  // Private methods
+  describe('#modulo11()', function() {
+    var modulo11 = Boleto.__get__('modulo11');
+
+    it('should return the correct checksum', function() {
+      expect(modulo11('09')).to.equal(4);
+      expect(modulo11('18')).to.equal(3);
+      expect(modulo11('27')).to.equal(2);
+      expect(modulo11('36')).to.equal(1);
+      expect(modulo11('45')).to.equal(1);
     });
   });
 });
