@@ -19,12 +19,12 @@ class Boleto {
    * Validates whether the bank slip number is valid or not
    */
   valid() {
-    if (this.bankSlipNumber.length != 47) return false;
+    if (this.bankSlipNumber.length !== 47) return false;
 
     var barcodeDigits = this.barcode().split('');
     var checksum = barcodeDigits.splice(4, 1);
 
-    if (modulo11(barcodeDigits) != checksum) return false;
+    if (modulo11(barcodeDigits) !== checksum) return false;
     return true;
   }
 
@@ -117,7 +117,7 @@ class Boleto {
   prettyAmount() {
     var currency = this.currency();
 
-    if (currency == 'Unknown') {
+    if (currency === 'Unknown') {
       return this.amount().toFixed(2);
     }
 
@@ -135,7 +135,7 @@ class Boleto {
  * @params {Array|String} digits
  */
 function modulo11(digits) {
-  if (typeof digits == 'string') {
+  if (typeof digits === 'string') {
     digits = digits.split('');
   }
 
