@@ -9,3 +9,5 @@ cache:
 addons:
   code_climate:
     repo_token: 4d99b78b9a22766e6e15f9f3d273db9ad64cf326fac7f63bc36115737f46b231
+after_script:
+  - codeclimate-test-reporter < coverage/lcov.info
