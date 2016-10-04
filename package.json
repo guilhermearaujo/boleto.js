@@ -8,7 +8,8 @@
     "build-debug": "browserify src/boleto.js -s Boleto -t [babelify] -p [bannerify --file .banner ] -o dist/boleto.js",
     "build-min": "uglifyjs dist/boleto.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/boleto.min.js",
     "build-watch": "watchify src/boleto.js -s Boleto -t [babelify] -o dist/boleto.js -v",
-    "prepublish": "babel src --out-dir lib --loose all"
+    "prepublish": "babel src --out-dir lib --loose all",
+    "test": "mocha --reporter spec --compilers js:babel-core/register"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,8 @@
     "babelify": "^7.2.0",
     "bannerify": "1.0.1",
     "browserify": "^13.0.0",
+    "chai": "^3.5.0",
+    "mocha": "^3.1.0",
     "uglify-js": "^2.4.24",
     "watchify": "^3.4.0"
   }
