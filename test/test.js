@@ -100,6 +100,7 @@ describe('Boleto.js', function() {
 var ITF = rewire('../src/itf');
 
 describe('itf.js', function() {
+
   // Public methods
   describe('#encode()', function() {
     it('should return begin with the start code', function() {
@@ -125,6 +126,35 @@ describe('itf.js', function() {
       expect(interleavePair('27')).to.equal('1121111222');
       expect(interleavePair('36')).to.equal('2122121111');
       expect(interleavePair('45')).to.equal('1211221121');
+    });
+  });
+});
+
+// SVG tests
+
+var SVG = rewire('../src/svg');
+var svg = new SVG('101010', 4);
+
+describe('svg.js', function() {
+
+  // Public methods
+  describe('#constructor()', function() {
+    it('should create a valid SVG object', function() {
+      expect(svg.stripes).to.deep.equal([1, 0, 1, 0, 1, 0]);
+      expect(svg.stripeWidth).to.equal(4);
+    });
+  });
+
+  describe('#viewBoxWidth()', function() {
+    it('should sum the stripes and multiply them by the stripe width', function() {
+      expect(svg.viewBoxWidth()).to.equal(12);
+    });
+  });
+
+  describe('#color()', function() {
+    it('should return, in hex, white for odd and black for even numbers', function() {
+      expect(svg.color(1)).to.equal('#ffffff');
+      expect(svg.color(2)).to.equal('#000000');
     });
   });
 });
