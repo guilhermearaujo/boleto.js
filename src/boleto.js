@@ -24,8 +24,7 @@ class Boleto {
     var barcodeDigits = this.barcode().split('');
     var checksum = barcodeDigits.splice(4, 1);
 
-    if (modulo11(barcodeDigits) !== checksum) return false;
-    return true;
+    return (modulo11(barcodeDigits).toString() === checksum.toString());
   }
 
   /**
