@@ -1,4 +1,7 @@
 var expect = require('chai').expect;
+var rewire = require('rewire');
+
+// Boleto.js tests
 
 var Boleto = require('../src/boleto');
 
@@ -87,6 +90,41 @@ describe('Boleto.js', function() {
   describe('#prettyAmount()', function() {
     it('should return correct, formatted amount', function() {
       expect(bankslip.prettyAmount()).to.equal('R$ 20,00');
+    });
+  });
+});
+
+
+// ITF tests
+
+var ITF = rewire('../src/itf');
+
+describe('itf.js', function() {
+  // Public methods
+  describe('#encode()', function() {
+    it('should return begin with the start code', function() {
+      expect(ITF.encode('11')).to.match(/^1111/);
+    });
+
+    it('should return end with the stop code', function() {
+      expect(ITF.encode('11')).to.match(/211$/);
+    });
+
+    it('should return the correct code code', function() {
+      expect(ITF.encode('11')).to.equal('11112211111122211');
+    });
+  });
+
+  // Private methods
+  describe('#interleavePair()', function() {
+    var interleavePair = ITF.__get__('interleavePair');
+
+    it('should interleave the codes correctly', function() {
+      expect(interleavePair('09')).to.equal('1112212211');
+      expect(interleavePair('18')).to.equal('2211111221');
+      expect(interleavePair('27')).to.equal('1121111222');
+      expect(interleavePair('36')).to.equal('2122121111');
+      expect(interleavePair('45')).to.equal('1211221121');
     });
   });
 });
