@@ -11,6 +11,17 @@ var invalidBankslipNumber = '34195000080123320318964221470004584410000002001';
 
 var bankslip = new Boleto(validBankslipNumber);
 
+var fakeWrapper = function() {
+  return {
+    children: [],
+    appendChild: function(child) {
+      this.children.push(child);
+    }
+  };
+};
+
+sinon.stub(document, 'querySelector');
+
 describe('Boleto.js', function() {
 
   // Public methods
@@ -61,14 +72,92 @@ describe('Boleto.js', function() {
   });
 
   describe('#bank()', function() {
-    it('should return correct bank name', function() {
+    var bankslip = new Boleto(validBankslipNumber);
+    sinon.stub(bankslip, 'barcode');
+
+    it('should return correct Banco do Brasil', function() {
+      bankslip.barcode.withArgs().returns('001');
+      expect(bankslip.bank()).to.equal('Banco do Brasil');
+    });
+
+    it('should return correct Santander', function() {
+      bankslip.barcode.withArgs().returns('033');
+      expect(bankslip.bank()).to.equal('Santander');
+    });
+
+    it('should return correct Caixa Econômica Federal', function() {
+      bankslip.barcode.withArgs().returns('104');
+      expect(bankslip.bank()).to.equal('Caixa Econômica Federal');
+    });
+
+    it('should return correct Bradesco', function() {
+      bankslip.barcode.withArgs().returns('237');
+      expect(bankslip.bank()).to.equal('Bradesco');
+    });
+
+    it('should return correct Itaú', function() {
+      bankslip.barcode.withArgs().returns('341');
       expect(bankslip.bank()).to.equal('Itaú');
+    });
+
+    it('should return correct Banco Real', function() {
+      bankslip.barcode.withArgs().returns('356');
+      expect(bankslip.bank()).to.equal('Banco Real');
+    });
+
+    it('should return correct Banco Mercantil do Brasil', function() {
+      bankslip.barcode.withArgs().returns('389');
+      expect(bankslip.bank()).to.equal('Banco Mercantil do Brasil');
+    });
+
+    it('should return correct HSBC', function() {
+      bankslip.barcode.withArgs().returns('399');
+      expect(bankslip.bank()).to.equal('HSBC');
+    });
+
+    it('should return correct Banco Safra', function() {
+      bankslip.barcode.withArgs().returns('422');
+      expect(bankslip.bank()).to.equal('Banco Safra');
+    });
+
+    it('should return correct Banco Rural', function() {
+      bankslip.barcode.withArgs().returns('453');
+      expect(bankslip.bank()).to.equal('Banco Rural');
+    });
+
+    it('should return correct Banco Rendimento', function() {
+      bankslip.barcode.withArgs().returns('633');
+      expect(bankslip.bank()).to.equal('Banco Rendimento');
+    });
+
+    it('should return correct Unibanco', function() {
+      bankslip.barcode.withArgs().returns('652');
+      expect(bankslip.bank()).to.equal('Unibanco');
+    });
+
+    it('should return correct Citibank', function() {
+      bankslip.barcode.withArgs().returns('745');
+      expect(bankslip.bank()).to.equal('Citibank');
+    });
+
+    it('should return correct Unknown', function() {
+      bankslip.barcode.withArgs().returns('999');
+      expect(bankslip.bank()).to.equal('Unknown');
     });
   });
 
   describe('#currency()', function() {
-    it('should return correct currency', function() {
+    var bankslip = new Boleto(validBankslipNumber);
+    sinon.stub(bankslip, 'barcode');
+
+    it('should return BRL', function() {
+      bankslip.barcode.withArgs().returns('xxx9');
       expect(bankslip.currency()).to.deep.equal({ code: 'BRL', symbol: 'R$', decimal: ',' });
+    });
+
+    it('should return Unknown', function() {
+      bankslip.barcode.withArgs().returns('xxx0');
+      expect(bankslip.currency()).to.deep.equal('Unknown');
     });
   });
 
@@ -91,8 +180,25 @@ describe('Boleto.js', function() {
   });
 
   describe('#prettyAmount()', function() {
-    it('should return correct, formatted amount', function() {
+    var bankslip = new Boleto(validBankslipNumber);
+    sinon.stub(bankslip, 'barcode');
+
+    it('should return the correct, formatted amount in BRL', function() {
+      bankslip.barcode.withArgs().returns('xxx9xxxxx0000002000');
       expect(bankslip.prettyAmount()).to.equal('R$ 20,00');
+    });
+
+    it('should return correct, unformatted amount', function() {
+      bankslip.barcode.withArgs().returns('xxx0xxxxx0000002000');
+      expect(bankslip.prettyAmount()).to.equal('20.00');
+    });
+  });
+
+  describe('#toSVG()', function() {
+    it('should render the SVG', function() {
+      var wrapper = fakeWrapper();
+      document.querySelector.withArgs('#fake-wrapper').returns(wrapper);
+      expect(bankslip.toSVG('#fake-wrapper')).to.be.undefined;
     });
   });
 
@@ -106,6 +212,7 @@ describe('Boleto.js', function() {
       expect(modulo11('27')).to.equal(2);
       expect(modulo11('36')).to.equal(1);
       expect(modulo11('45')).to.equal(1);
+      expect(modulo11('99')).to.equal(1);
     });
   });
 });
@@ -162,24 +269,16 @@ describe('svg.js', function() {
   });
 
   describe('#render()', function() {
-    var fakeWrapper = {
-      children: [],
-      appendChild: function(child) {
-        this.children.push(child);
-      }
-    };
-
-    sinon.stub(document, 'querySelector');
-    document.querySelector.withArgs('#fake-wrapper').returns(fakeWrapper);
-
+    var wrapper = fakeWrapper();
+    document.querySelector.withArgs('#fake-wrapper').returns(wrapper);
     svg.render('#fake-wrapper')
 
     it('should append one SVG to the wrapper', function() {
-      expect(fakeWrapper.children.length).to.equal(1);
+      expect(wrapper.children.length).to.equal(1);
     });
 
     it('should append six stripes to the SVG', function() {
-      expect(fakeWrapper.children[0].children.length).to.equal(6);
+      expect(wrapper.children[0].children.length).to.equal(6);
     });
   });
 

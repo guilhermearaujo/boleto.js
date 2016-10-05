@@ -117,7 +117,7 @@ class Boleto {
     var currency = this.currency();
 
     if (currency === 'Unknown') {
-      return this.amount().toFixed(2);
+      return this.amount();
     }
 
     return currency.symbol + ' ' + this.amount().replace('.', currency.decimal);
