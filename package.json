@@ -9,7 +9,7 @@
     "build-min": "uglifyjs dist/boleto.js --comments '/!/' -m screw_ie8=true -c screw_ie8=true,unused=false -o dist/boleto.min.js",
     "build-watch": "watchify src/boleto.js -s Boleto -t [babelify] -o dist/boleto.js -v",
     "prepublish": "babel src --out-dir lib --loose all",
-    "test": "istanbul cover _mocha -- --reporter spec --compilers js:babel-core/register"
+    "test": "istanbul cover _mocha -- --reporter spec --require jsdom-global/register --compilers js:babel-core/register"
   },
   "repository": {
     "type": "git",
@@ -38,8 +38,11 @@
     "chai": "^3.5.0",
     "codeclimate-test-reporter": "^0.4.0",
     "istanbul": "^1.1.0-alpha",
+    "jsdom": "9.6.0",
+    "jsdom-global": "2.1.0",
     "mocha": "^3.1.0",
     "rewire": "^2.5.2",
+    "sinon": "^1.17.6",
     "uglify-js": "^2.4.24",
     "watchify": "^3.4.0"
   }

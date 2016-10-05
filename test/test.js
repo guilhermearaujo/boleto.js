@@ -1,5 +1,6 @@
 var expect = require('chai').expect;
 var rewire = require('rewire');
+var sinon = require('sinon');
 
 // Boleto.js tests
 
@@ -148,7 +149,7 @@ describe('itf.js', function() {
 // SVG tests
 
 var SVG = rewire('../src/svg');
-var svg = new SVG('101010', 4);
+var svg = new SVG('101010');
 
 describe('svg.js', function() {
 
@@ -157,6 +158,28 @@ describe('svg.js', function() {
     it('should create a valid SVG object', function() {
       expect(svg.stripes).to.deep.equal([1, 0, 1, 0, 1, 0]);
       expect(svg.stripeWidth).to.equal(4);
+    });
+  });
+
+  describe('#render()', function() {
+    var fakeWrapper = {
+      children: [],
+      appendChild: function(child) {
+        this.children.push(child);
+      }
+    };
+
+    sinon.stub(document, 'querySelector');
+    document.querySelector.withArgs('#fake-wrapper').returns(fakeWrapper);
+
+    svg.render('#fake-wrapper')
+
+    it('should append one SVG to the wrapper', function() {
+      expect(fakeWrapper.children.length).to.equal(1);
+    });
+
+    it('should append six stripes to the SVG', function() {
+      expect(fakeWrapper.children[0].children.length).to.equal(6);
     });
   });
 
