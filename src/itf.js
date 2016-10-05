@@ -22,6 +22,7 @@ const STOP = '211';
 
 /**
  * Encodes a base-10 number into its Interleaved 2 of 5 (ITF) representation
+ *
  * @param {String} number
  */
 function encode(number) {
@@ -29,7 +30,8 @@ function encode(number) {
 }
 
 /**
- * Converts a pair of digits in their ITF representation and interleave them
+ * Converts a pair of digits into their ITF representation and interleave them
+ *
  * @param {String} number
  */
 function interleavePair(pair) {
