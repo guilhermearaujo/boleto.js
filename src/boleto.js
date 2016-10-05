@@ -5,6 +5,7 @@ var ITF = require('./itf');
 class Boleto {
   /**
    * Initializes the class
+   *
    * @params {String} bankSlipNumber
    */
   constructor(bankSlipNumber) {
@@ -17,6 +18,11 @@ class Boleto {
 
   /**
    * Validates whether the bank slip number is valid or not
+   *
+   * The validation function ensures that the bank slip number is exactly 47
+   * characters long, then applies the modulo-11 algorithm to the bank slip's
+   * barcode. Finally, it verifies that the result of the algorithm equals the
+   * checksum digit from the bank slip number.
    */
   valid() {
     if (this.bankSlipNumber.length !== 47) return false;
@@ -29,6 +35,11 @@ class Boleto {
 
   /**
    * Converts the printed bank slip number into the barcode number
+   *
+   * The bank slip's number is a rearrangement of its barcode, plus three
+   * checksum digits. This function executes the inverse process and returns the
+   * original arrangement of the code. Specifications can be found at
+   * https://portal.febraban.org.br/pagina/3166/33/pt-br/layour-arrecadacao
    */
   barcode() {
     return this.bankSlipNumber.replace(
@@ -45,7 +56,8 @@ class Boleto {
   }
 
   /**
-   * Returns the bank slip number with the usual, easy-to-read mask
+   * Returns the bank slip number with the usual, easy-to-read mask:
+   * 00000.00000 00000.000000 00000.000000 0 00000000000000
    */
   prettyNumber() {
     return this.bankSlipNumber.replace(
@@ -56,6 +68,12 @@ class Boleto {
 
   /**
    * Returns the name of the bank that issued the bank slip
+   *
+   * This function is able to identify the most popular or commonly used banks
+   * in Brazil, but not all of them are included here.
+   *
+   * A comprehensive list of all Brazilian banks and their codes can be found at
+   * http://www.buscabanco.org.br/AgenciasBancos.asp
    */
   bank() {
     switch (this.barcode().substr(0, 3)) {
@@ -78,6 +96,9 @@ class Boleto {
 
   /**
    * Returns the currency of the bank slip
+   *
+   * The currency is determined by the currency code, the fourth digit of the
+   * barcode. A list of values other than 9 (Brazilian Real) could not be found.
    */
   currency() {
     switch (this.barcode()[3]) {
@@ -88,6 +109,8 @@ class Boleto {
 
   /**
    * Returns the verification digit of the barcode
+   *
+   * The barcode has its own checksum digit, which is the fifth digit of itself.
    */
   checksum() {
     return this.barcode()[4];
@@ -95,6 +118,11 @@ class Boleto {
 
   /**
    * Returns the date when the bank slip is due
+   *
+   * The portion of the barcode ranging from its sixth to its nineth digits
+   * represent the number of days since the 7th of October, 1997 up to when the
+   * bank slip is good to be paid. Attempting to pay a bank slip after this date
+   * may incurr in extra fees.
    */
   expirationDate() {
     var refDate = new Date('1997-10-07');
@@ -123,6 +151,11 @@ class Boleto {
     return currency.symbol + ' ' + this.amount().replace('.', currency.decimal);
   }
 
+  /**
+   * Renders the bank slip as a child of the provided selector
+   *
+   * @param {String} selector
+   */
   toSVG(selector) {
     var stripes = ITF.encode(this.barcode());
     new SVG(stripes).render(selector);
@@ -131,6 +164,10 @@ class Boleto {
 
 /**
  * Calculates the modulo 11 checksum digit
+ *
+ * The specifications of the algorithm can be found at
+ * https://portal.febraban.org.br/pagina/3166/33/pt-br/layour-arrecadacao
+ *
  * @params {Array|String} digits
  */
 function modulo11(digits) {
