@@ -2,8 +2,9 @@ class SVG {
   /**
    * Initializes the class
    *
-   * @param {Array} stripes
-   * @param {Integer} stripeWidth
+   * @constructor
+   * @param {Array} stripes The list of stripes to be drawn
+   * @param {Integer} stripeWidth The width of a single-weighted stripe
    */
   constructor(stripes, stripeWidth) {
     this.stripes = stripes.split('').map(function(a) { return parseInt(a, 10); });
@@ -18,7 +19,8 @@ class SVG {
    * These stripes are placed from left to right. Their width will vary
    * depending on their weight, which can be either 1 or 2.
    *
-   * @param {Object} selector
+   * @param {String} selector The selector to the object where the SVG must be
+   * appended
    */
   render(selector) {
     var wrapper = document.querySelector(selector);
@@ -50,6 +52,8 @@ class SVG {
    *
    * The calculation method is the sum of the weight of the stripes multiplied
    * by the width of a single-wighted stripe
+   *
+   * @return {Integer} The width of a view box that fits the barcode
    */
   viewBoxWidth() {
     return this.stripes.reduce(function(a, b) { return a + b; }, 0) * this.stripeWidth;
@@ -60,7 +64,14 @@ class SVG {
    *
    * Odd numbers will return white, even will return black
    *
-   * @param {Integer} i
+   * @param {Integer} i The index of the stripe
+   * @return {String} The stripe color
+   *
+   * @example
+   * // Returns "#ffffff"
+   * svg.color(1);
+   * // Returns "#000000"
+   * svg.color(2);
    */
   color(i) {
     return i % 2 ? '#ffffff' : '#000000';

@@ -6,7 +6,8 @@ class Boleto {
   /**
    * Initializes the class
    *
-   * @params {String} bankSlipNumber
+   * @constructor
+   * @param {String} bankSlipNumber The bank slip number
    */
   constructor(bankSlipNumber) {
     this.bankSlipNumber = bankSlipNumber.replace(/[^\d]/g, '');
@@ -23,6 +24,8 @@ class Boleto {
    * characters long, then applies the modulo-11 algorithm to the bank slip's
    * barcode. Finally, it verifies that the result of the algorithm equals the
    * checksum digit from the bank slip number.
+   *
+   * @return {Boolean} Whether the bank slip number is valid or not
    */
   valid() {
     if (this.bankSlipNumber.length !== 47) return false;
@@ -40,6 +43,8 @@ class Boleto {
    * checksum digits. This function executes the inverse process and returns the
    * original arrangement of the code. Specifications can be found at
    * https://portal.febraban.org.br/pagina/3166/33/pt-br/layour-arrecadacao
+   *
+   * @return {String} The barcode extracted from the bank slip number
    */
   barcode() {
     return this.bankSlipNumber.replace(
@@ -50,6 +55,8 @@ class Boleto {
 
   /**
    * Returns the bank slip's raw number
+   *
+   * @return {String} The raw bank slip number
    */
   number() {
     return this.bankSlipNumber;
@@ -58,6 +65,8 @@ class Boleto {
   /**
    * Returns the bank slip number with the usual, easy-to-read mask:
    * 00000.00000 00000.000000 00000.000000 0 00000000000000
+   *
+   * @return {String} The formatted bank slip number
    */
   prettyNumber() {
     return this.bankSlipNumber.replace(
@@ -74,6 +83,8 @@ class Boleto {
    *
    * A comprehensive list of all Brazilian banks and their codes can be found at
    * http://www.buscabanco.org.br/AgenciasBancos.asp
+   *
+   * @return {String} The bank name
    */
   bank() {
     switch (this.barcode().substr(0, 3)) {
@@ -99,6 +110,8 @@ class Boleto {
    *
    * The currency is determined by the currency code, the fourth digit of the
    * barcode. A list of values other than 9 (Brazilian Real) could not be found.
+   *
+   * @return {String} The currency code, symbol and decimal separator
    */
   currency() {
     switch (this.barcode()[3]) {
@@ -111,6 +124,8 @@ class Boleto {
    * Returns the verification digit of the barcode
    *
    * The barcode has its own checksum digit, which is the fifth digit of itself.
+   *
+   * @return {String} The checksum of the barcode
    */
   checksum() {
     return this.barcode()[4];
@@ -123,6 +138,8 @@ class Boleto {
    * represent the number of days since the 7th of October, 1997 up to when the
    * bank slip is good to be paid. Attempting to pay a bank slip after this date
    * may incurr in extra fees.
+   *
+   * @return {Date} The expiration date of the bank slip
    */
   expirationDate() {
     var refDate = new Date('1997-10-07');
@@ -133,6 +150,8 @@ class Boleto {
 
   /**
    * Returns the bank slip's nominal amount
+   *
+   * @return {String} The bank slip's raw amount
    */
   amount() {
     return (this.barcode().substr(9, 10) / 100.0).toFixed(2);
@@ -140,6 +159,8 @@ class Boleto {
 
   /**
    * Returns the bank slip's formatted nominal amount
+   *
+   * @return {String} The bank slip's formatted amount
    */
   prettyAmount() {
     var currency = this.currency();
@@ -154,7 +175,10 @@ class Boleto {
   /**
    * Renders the bank slip as a child of the provided selector
    *
-   * @param {String} selector
+   * @param {String} selector The selector to the object where the SVG must be
+   * appended
+   *
+   * @see {@link SVG#render}
    */
   toSVG(selector) {
     var stripes = ITF.encode(this.barcode());
@@ -169,6 +193,11 @@ class Boleto {
  * https://portal.febraban.org.br/pagina/3166/33/pt-br/layour-arrecadacao
  *
  * @params {Array|String} digits
+ * @return {Integer} The modulo 11 checksum digit
+ *
+ * @example
+ * // Returns 7
+ * modulo11('123456789');
  */
 function modulo11(digits) {
   if (typeof digits === 'string') {

@@ -1,5 +1,12 @@
 /**
+ * @module ITF
+ */
+
+/**
  * Representations of each decimal digit
+ *
+ * @default
+ * @constant
  */
 const WEIGHTS = [
   '11221', // 0
@@ -15,15 +22,30 @@ const WEIGHTS = [
 ];
 
 /**
- * Representations of Start and Stop portions of the barcode
+ * Representation of Start portion of the barcode
+ *
+ * @default
+ * @constant
  */
 const START = '1111';
+
+/**
+ * Representation of Stop portion of the barcode
+ *
+ * @default
+ * @constant
+ */
 const STOP = '211';
 
 /**
  * Encodes a base-10 number into its Interleaved 2 of 5 (ITF) representation
  *
- * @param {String} number
+ * @param {String} number The number to be encoded
+ * @return {String} The input number encoded into its ITF representation
+ *
+ * @example
+ * // Returns "111121121111222121121112211222111112111122211121122211211"
+ * ITF.encode('1234567890');
  */
 function encode(number) {
   return START + number.match(/(..?)/g).map(interleavePair).join('') + STOP;
@@ -32,7 +54,12 @@ function encode(number) {
 /**
  * Converts a pair of digits into their ITF representation and interleave them
  *
- * @param {String} number
+ * @param {String} pair The pair to be interleaved
+ * @return {String} The input pair encoded into its ITF representation
+ *
+ * @example
+ * // Returns "1211212112"
+ * ITF.interleavePair('01');
  */
 function interleavePair(pair) {
 
