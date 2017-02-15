@@ -27,6 +27,16 @@ Crie uma instância de `Boleto` passando o número do boleto e o seletor do elem
 </script>
 ```
 
+Opcionalmente, você pode retornar a representação HTML da imagem do código de barras:
+
+```html
+<script>
+  var number = '34195.00008 01233.203189 64221.470004 5 84410000002000';
+  var img = new Boleto(number).toSVG();
+  console.log(img);
+</script>
+```
+
 O número do boleto pode conter apenas os números ou estar formatado com pontos e espaços.
 O boleto.js irá filtrar apenas os dígitos e validá-los antes de mostrar o código de barras.
 

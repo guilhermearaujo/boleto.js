@@ -23,11 +23,8 @@ class SVG {
    * appended
    */
   render(selector) {
-    var wrapper = document.querySelector(selector);
+    var wrapper = selector ? document.querySelector(selector) : false;
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-
-    wrapper.appendChild(svg);
-
     var pos = 0;
 
     for (var i = 0; i < this.stripes.length; i++, pos += width) {
@@ -45,6 +42,12 @@ class SVG {
     svg.setAttribute('width', '100%');
     svg.setAttribute('height', '100%');
     svg.setAttribute('viewBox', '0 0 ' + this.viewBoxWidth() + ' 100');
+
+    if (wrapper) {
+      wrapper.appendChild(svg);
+    } else {
+      return svg.outerHTML;
+    }
   }
 
   /**
