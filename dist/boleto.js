@@ -1,5 +1,5 @@
 /*!
- * boleto.js v0.0.3
+ * boleto.js v0.0.4
  * https://github.com/guilhermearaujo/boleto.js
  *
  * Licensed MIT © Guilherme Araújo
@@ -20,9 +20,10 @@ var ITF = require('./itf');
 var Boleto = function () {
   /**
    * Initializes the class
-   * @params {String} bankSlipNumber
+   *
+   * @constructor
+   * @param {String} bankSlipNumber The bank slip number
    */
-
   function Boleto(bankSlipNumber) {
     _classCallCheck(this, Boleto);
 
@@ -35,21 +36,34 @@ var Boleto = function () {
 
   /**
    * Validates whether the bank slip number is valid or not
+   *
+   * The validation function ensures that the bank slip number is exactly 47
+   * characters long, then applies the modulo-11 algorithm to the bank slip's
+   * barcode. Finally, it verifies that the result of the algorithm equals the
+   * checksum digit from the bank slip number.
+   *
+   * @return {Boolean} Whether the bank slip number is valid or not
    */
 
 
   Boleto.prototype.valid = function valid() {
-    if (this.bankSlipNumber.length != 47) return false;
+    if (this.bankSlipNumber.length !== 47) return false;
 
     var barcodeDigits = this.barcode().split('');
     var checksum = barcodeDigits.splice(4, 1);
 
-    if (modulo11(barcodeDigits) != checksum) return false;
-    return true;
+    return modulo11(barcodeDigits).toString() === checksum.toString();
   };
 
   /**
    * Converts the printed bank slip number into the barcode number
+   *
+   * The bank slip's number is a rearrangement of its barcode, plus three
+   * checksum digits. This function executes the inverse process and returns the
+   * original arrangement of the code. Specifications can be found at
+   * https://portal.febraban.org.br/pagina/3166/33/pt-br/layour-arrecadacao
+   *
+   * @return {String} The barcode extracted from the bank slip number
    */
 
 
@@ -59,6 +73,8 @@ var Boleto = function () {
 
   /**
    * Returns the bank slip's raw number
+   *
+   * @return {String} The raw bank slip number
    */
 
 
@@ -67,7 +83,10 @@ var Boleto = function () {
   };
 
   /**
-   * Returns the bank slip number with the usual, easy-to-read mask
+   * Returns the bank slip number with the usual, easy-to-read mask:
+   * 00000.00000 00000.000000 00000.000000 0 00000000000000
+   *
+   * @return {String} The formatted bank slip number
    */
 
 
@@ -77,6 +96,14 @@ var Boleto = function () {
 
   /**
    * Returns the name of the bank that issued the bank slip
+   *
+   * This function is able to identify the most popular or commonly used banks
+   * in Brazil, but not all of them are included here.
+   *
+   * A comprehensive list of all Brazilian banks and their codes can be found at
+   * http://www.buscabanco.org.br/AgenciasBancos.asp
+   *
+   * @return {String} The bank name
    */
 
 
@@ -115,6 +142,11 @@ var Boleto = function () {
 
   /**
    * Returns the currency of the bank slip
+   *
+   * The currency is determined by the currency code, the fourth digit of the
+   * barcode. A list of values other than 9 (Brazilian Real) could not be found.
+   *
+   * @return {String} The currency code, symbol and decimal separator
    */
 
 
@@ -129,6 +161,10 @@ var Boleto = function () {
 
   /**
    * Returns the verification digit of the barcode
+   *
+   * The barcode has its own checksum digit, which is the fifth digit of itself.
+   *
+   * @return {String} The checksum of the barcode
    */
 
 
@@ -138,6 +174,13 @@ var Boleto = function () {
 
   /**
    * Returns the date when the bank slip is due
+   *
+   * The portion of the barcode ranging from its sixth to its nineth digits
+   * represent the number of days since the 7th of October, 1997 up to when the
+   * bank slip is good to be paid. Attempting to pay a bank slip after this date
+   * may incurr in extra fees.
+   *
+   * @return {Date} The expiration date of the bank slip
    */
 
 
@@ -150,6 +193,8 @@ var Boleto = function () {
 
   /**
    * Returns the bank slip's nominal amount
+   *
+   * @return {String} The bank slip's raw amount
    */
 
 
@@ -159,22 +204,39 @@ var Boleto = function () {
 
   /**
    * Returns the bank slip's formatted nominal amount
+   *
+   * @return {String} The bank slip's formatted amount
    */
 
 
   Boleto.prototype.prettyAmount = function prettyAmount() {
     var currency = this.currency();
 
-    if (currency == 'Unknown') {
-      return this.amount().toFixed(2);
+    if (currency === 'Unknown') {
+      return this.amount();
     }
 
     return currency.symbol + ' ' + this.amount().replace('.', currency.decimal);
   };
 
+  /**
+   * Renders the bank slip as a child of the provided selector
+   *
+   * @param {String} selector The selector to the object where the SVG must be
+   * appended
+   *
+   * @see {@link SVG#render}
+   */
+
+
   Boleto.prototype.toSVG = function toSVG(selector) {
     var stripes = ITF.encode(this.barcode());
-    new _svg2.default(stripes).render(selector);
+    var svg = new _svg2.default(stripes);
+    if (selector) {
+      svg.render(selector);
+    } else {
+      return svg.render();
+    }
   };
 
   return Boleto;
@@ -182,12 +244,21 @@ var Boleto = function () {
 
 /**
  * Calculates the modulo 11 checksum digit
+ *
+ * The specifications of the algorithm can be found at
+ * https://portal.febraban.org.br/pagina/3166/33/pt-br/layour-arrecadacao
+ *
  * @params {Array|String} digits
+ * @return {Integer} The modulo 11 checksum digit
+ *
+ * @example
+ * // Returns 7
+ * modulo11('123456789');
  */
 
 
 function modulo11(digits) {
-  if (typeof digits == 'string') {
+  if (typeof digits === 'string') {
     digits = digits.split('');
   }
 
@@ -208,7 +279,14 @@ module.exports = Boleto;
 'use strict';
 
 /**
+ * @module ITF
+ */
+
+/**
  * Representations of each decimal digit
+ *
+ * @default
+ * @constant
  */
 var WEIGHTS = ['11221', // 0
 '21112', // 1
@@ -223,22 +301,44 @@ var WEIGHTS = ['11221', // 0
 ];
 
 /**
- * Representations of Start and Stop portions of the barcode
+ * Representation of Start portion of the barcode
+ *
+ * @default
+ * @constant
  */
 var START = '1111';
+
+/**
+ * Representation of Stop portion of the barcode
+ *
+ * @default
+ * @constant
+ */
 var STOP = '211';
 
 /**
  * Encodes a base-10 number into its Interleaved 2 of 5 (ITF) representation
- * @param {String} number
+ *
+ * @param {String} number The number to be encoded
+ * @return {String} The input number encoded into its ITF representation
+ *
+ * @example
+ * // Returns "111121121111222121121112211222111112111122211121122211211"
+ * ITF.encode('1234567890');
  */
 function encode(number) {
   return START + number.match(/(..?)/g).map(interleavePair).join('') + STOP;
 }
 
 /**
- * Converts a pair of digits in their ITF representation and interleave them
- * @param {String} number
+ * Converts a pair of digits into their ITF representation and interleave them
+ *
+ * @param {String} pair The pair to be interleaved
+ * @return {String} The input pair encoded into its ITF representation
+ *
+ * @example
+ * // Returns "1211212112"
+ * ITF.interleavePair('01');
  */
 function interleavePair(pair) {
 
@@ -265,10 +365,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var SVG = function () {
   /**
    * Initializes the class
-   * @param {Array} stripes
-   * @param {Integer} stripeWidth
+   *
+   * @constructor
+   * @param {Array} stripes The list of stripes to be drawn
+   * @param {Integer} stripeWidth The width of a single-weighted stripe
    */
-
   function SVG(stripes, stripeWidth) {
     _classCallCheck(this, SVG);
 
@@ -280,16 +381,20 @@ var SVG = function () {
 
   /**
    * Appends an SVG object and renders the barcode inside it
-   * @param {Object} selector
+   *
+   * The structure of the SVG is a series of parallel rectangular stripes whose
+   * colors alternate between black or white.
+   * These stripes are placed from left to right. Their width will vary
+   * depending on their weight, which can be either 1 or 2.
+   *
+   * @param {String} selector The selector to the object where the SVG must be
+   * appended
    */
 
 
   SVG.prototype.render = function render(selector) {
-    var wrapper = document.querySelector(selector);
+    var wrapper = selector ? document.querySelector(selector) : false;
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-
-    wrapper.appendChild(svg);
-
     var pos = 0;
 
     for (var i = 0; i < this.stripes.length; i++, pos += width) {
@@ -307,10 +412,21 @@ var SVG = function () {
     svg.setAttribute('width', '100%');
     svg.setAttribute('height', '100%');
     svg.setAttribute('viewBox', '0 0 ' + this.viewBoxWidth() + ' 100');
+
+    if (wrapper) {
+      wrapper.appendChild(svg);
+    } else {
+      return svg.outerHTML;
+    }
   };
 
   /**
    * Calculates the total width of the barcode
+   *
+   * The calculation method is the sum of the weight of the stripes multiplied
+   * by the width of a single-wighted stripe
+   *
+   * @return {Integer} The width of a view box that fits the barcode
    */
 
 
@@ -322,7 +438,17 @@ var SVG = function () {
 
   /**
    * Returns the appropriate color for each stripe
-   * @param {Integer} i
+   *
+   * Odd numbers will return white, even will return black
+   *
+   * @param {Integer} i The index of the stripe
+   * @return {String} The stripe color
+   *
+   * @example
+   * // Returns "#ffffff"
+   * svg.color(1);
+   * // Returns "#000000"
+   * svg.color(2);
    */
 
 
