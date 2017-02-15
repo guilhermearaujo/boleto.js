@@ -1,5 +1,5 @@
 /*!
- * boleto.js v0.0.4
+ * boleto.js v0.0.5
  * https://github.com/guilhermearaujo/boleto.js
  *
  * Licensed MIT © Guilherme Araújo
@@ -416,7 +416,7 @@ var SVG = function () {
     if (wrapper) {
       wrapper.appendChild(svg);
     } else {
-      return svg.outerHTML;
+      return new XMLSerializer().serializeToString(svg);
     }
   };
 

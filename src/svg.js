@@ -46,7 +46,7 @@ class SVG {
     if (wrapper) {
       wrapper.appendChild(svg);
     } else {
-      return svg.outerHTML;
+      return new XMLSerializer().serializeToString(svg);
     }
   }
 
