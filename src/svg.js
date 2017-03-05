@@ -23,7 +23,6 @@ class SVG {
    * appended
    */
   render(selector) {
-    var wrapper = selector ? document.querySelector(selector) : false;
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     var pos = 0;
 
@@ -43,10 +42,10 @@ class SVG {
     svg.setAttribute('height', '100%');
     svg.setAttribute('viewBox', '0 0 ' + this.viewBoxWidth() + ' 100');
 
-    if (wrapper) {
-      wrapper.appendChild(svg);
-    } else {
+    if (selector === undefined) {
       return new XMLSerializer().serializeToString(svg);
+    } else {
+      document.querySelector(selector).appendChild(svg);
     }
   }
 

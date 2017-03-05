@@ -182,12 +182,7 @@ class Boleto {
    */
   toSVG(selector) {
     var stripes = ITF.encode(this.barcode());
-    var svg = new SVG(stripes);
-    if (selector) {
-      svg.render(selector);
-    } else {
-      return svg.render();
-    }
+    return new SVG(stripes).render(selector);
   }
 }
 
