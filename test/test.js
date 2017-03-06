@@ -268,7 +268,7 @@ describe('svg.js', function() {
     });
   });
 
-  describe('#render()', function() {
+  describe('#render("selector")', function() {
     var wrapper = fakeWrapper();
     document.querySelector.withArgs('#fake-wrapper').returns(wrapper);
     svg.render('#fake-wrapper')
@@ -279,6 +279,22 @@ describe('svg.js', function() {
 
     it('should append six stripes to the SVG', function() {
       expect(wrapper.children[0].children.length).to.equal(6);
+    });
+  });
+
+  describe('#render()', function() {
+    var string = svg.render()
+
+    it('should append one SVG to the wrapper', function() {
+      var svgString =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 12 100">' +
+        '<rect width="4" height="100" fill="#000000" x="0" y="0"/>' +
+        '<rect width="0" height="100" fill="#ffffff" x="4" y="0"/>' +
+        '<rect width="4" height="100" fill="#000000" x="4" y="0"/>' +
+        '<rect width="0" height="100" fill="#ffffff" x="8" y="0"/>' +
+        '<rect width="4" height="100" fill="#000000" x="8" y="0"/>' +
+        '<rect width="0" height="100" fill="#ffffff" x="12" y="0"/></svg>'
+      expect(string).to.equal(svgString);
     });
   });
 

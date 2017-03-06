@@ -44,6 +44,7 @@
     "rewire": "^2.5.2",
     "sinon": "^1.17.6",
     "uglify-js": "^2.4.24",
-    "watchify": "^3.4.0"
+    "watchify": "^3.4.0",
+    "xmlserializer": "^0.6.0"
   }
 }

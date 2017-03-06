@@ -1,3 +1,5 @@
+var xmlserializer = require('xmlserializer');
+
 class SVG {
   /**
    * Initializes the class
@@ -43,7 +45,7 @@ class SVG {
     svg.setAttribute('viewBox', '0 0 ' + this.viewBoxWidth() + ' 100');
 
     if (selector === undefined) {
-      return new XMLSerializer().serializeToString(svg);
+      return xmlserializer.serializeToString(svg);
     } else {
       document.querySelector(selector).appendChild(svg);
     }
