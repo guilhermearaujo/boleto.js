@@ -1,5 +1,5 @@
 /*!
- * boleto.js v1.0.0
+ * boleto.js v1.0.1
  * https://github.com/guilhermearaujo/boleto.js
  *
  * Licensed MIT © Guilherme Araújo
