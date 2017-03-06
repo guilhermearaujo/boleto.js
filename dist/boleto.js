@@ -1,10 +1,141 @@
 /*!
- * boleto.js v0.0.5
+ * boleto.js v1.0.0
  * https://github.com/guilhermearaujo/boleto.js
  *
  * Licensed MIT © Guilherme Araújo
  */
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Boleto = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define([], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        root.xmlserializer = factory();
+    }
+}(this, function () {
+
+    var removeInvalidCharacters = function (content) {
+        // See http://www.w3.org/TR/xml/#NT-Char for valid XML 1.0 characters
+        return content.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '');
+    };
+
+    var serializeAttributeValue = function (value) {
+        return value
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&apos;');
+    };
+
+    var serializeTextContent = function (content) {
+        return content
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    };
+
+    var serializeAttribute = function (attr) {
+        var value = attr.value;
+
+        return ' ' + attr.name + '="' + serializeAttributeValue(value) + '"';
+    };
+
+    var getTagName = function (node) {
+        var tagName = node.tagName;
+
+        // Aid in serializing of original HTML documents
+        if (node.namespaceURI === 'http://www.w3.org/1999/xhtml') {
+            tagName = tagName.toLowerCase();
+        }
+        return tagName;
+    };
+
+    var serializeNamespace = function (node, isRootNode) {
+        var nodeHasXmlnsAttr = Array.prototype.map.call(node.attributes || node.attrs, function (attr) {
+            return attr.name;
+        })
+                .indexOf('xmlns') >= 0;
+        // Serialize the namespace as an xmlns attribute whenever the element
+        // doesn't already have one and the inherited namespace does not match
+        // the element's namespace.
+        if (!nodeHasXmlnsAttr &&
+            (isRootNode ||
+             node.namespaceURI !== node.parentNode.namespaceURI)) {
+            return ' xmlns="' + node.namespaceURI + '"';
+        } else {
+            return '';
+        }
+    };
+
+    var serializeChildren = function (node) {
+        return Array.prototype.map.call(node.childNodes, function (childNode) {
+            return nodeTreeToXHTML(childNode);
+        }).join('');
+    };
+
+    var serializeTag = function (node, isRootNode) {
+        var output = '<' + getTagName(node);
+        output += serializeNamespace(node, isRootNode);
+
+        Array.prototype.forEach.call(node.attributes || node.attrs, function (attr) {
+            output += serializeAttribute(attr);
+        });
+
+        if (node.childNodes.length > 0) {
+            output += '>';
+            output += serializeChildren(node);
+            output += '</' + getTagName(node) + '>';
+        } else {
+            output += '/>';
+        }
+        return output;
+    };
+
+    var serializeText = function (node) {
+        var text = node.nodeValue || node.value || '';
+        return serializeTextContent(text);
+    };
+
+    var serializeComment = function (node) {
+        return '<!--' +
+            node.data
+            .replace(/-/g, '&#45;') +
+            '-->';
+    };
+
+    var serializeCDATA = function (node) {
+        return '<![CDATA[' + node.nodeValue + ']]>';
+    };
+
+    var nodeTreeToXHTML = function (node, options) {
+        var isRootNode = options && options.rootNode;
+
+        if (node.nodeName === '#document' ||
+            node.nodeName === '#document-fragment') {
+            return serializeChildren(node);
+        } else {
+            if (node.tagName) {
+                return serializeTag(node, isRootNode);
+            } else if (node.nodeName === '#text') {
+                return serializeText(node);
+            } else if (node.nodeName === '#comment') {
+                return serializeComment(node);
+            } else if (node.nodeName === '#cdata-section') {
+                return serializeCDATA(node);
+            }
+        }
+    };
+
+    return {
+        serializeToString: function (node) {
+            return removeInvalidCharacters(nodeTreeToXHTML(node, {rootNode: true}));
+        }
+    };
+}));
+
+},{}],2:[function(require,module,exports){
 'use strict';
 
 var _svg = require('./svg');
@@ -231,12 +362,7 @@ var Boleto = function () {
 
   Boleto.prototype.toSVG = function toSVG(selector) {
     var stripes = ITF.encode(this.barcode());
-    var svg = new _svg2.default(stripes);
-    if (selector) {
-      svg.render(selector);
-    } else {
-      return svg.render();
-    }
+    return new _svg2.default(stripes).render(selector);
   };
 
   return Boleto;
@@ -275,7 +401,7 @@ function modulo11(digits) {
 
 module.exports = Boleto;
 
-},{"./itf":2,"./svg":3}],2:[function(require,module,exports){
+},{"./itf":3,"./svg":4}],3:[function(require,module,exports){
 'use strict';
 
 /**
@@ -357,10 +483,12 @@ function interleavePair(pair) {
 
 module.exports = { encode: encode };
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var xmlserializer = require('xmlserializer');
 
 var SVG = function () {
   /**
@@ -393,7 +521,6 @@ var SVG = function () {
 
 
   SVG.prototype.render = function render(selector) {
-    var wrapper = selector ? document.querySelector(selector) : false;
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     var pos = 0;
 
@@ -413,10 +540,10 @@ var SVG = function () {
     svg.setAttribute('height', '100%');
     svg.setAttribute('viewBox', '0 0 ' + this.viewBoxWidth() + ' 100');
 
-    if (wrapper) {
-      wrapper.appendChild(svg);
+    if (selector === undefined) {
+      return xmlserializer.serializeToString(svg);
     } else {
-      return new XMLSerializer().serializeToString(svg);
+      document.querySelector(selector).appendChild(svg);
     }
   };
 
@@ -461,5 +588,5 @@ var SVG = function () {
 
 module.exports = SVG;
 
-},{}]},{},[1])(1)
+},{"xmlserializer":1}]},{},[2])(2)
 });
