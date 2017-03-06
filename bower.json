@@ -1,0 +1,23 @@
+{
+  "name": "boleto.js",
+  "description": "Renderizador de código de barras para boletos bancários",
+  "main": "dist/boleto.js",
+  "authors": [
+    "Guilherme Araújo <guilhermeama@gmail.com> (https://github.com/guilhermearaujo)"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "boleto",
+    "código",
+    "barras",
+    "barcode"
+  ],
+  "homepage": "https://github.com/guilhermearaujo/boleto.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

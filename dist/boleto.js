@@ -1,5 +1,5 @@
 /*!
- * boleto.js v0.0.3
+ * boleto.js v0.0.5
  * https://github.com/guilhermearaujo/boleto.js
  *
  * Licensed MIT © Guilherme Araújo
@@ -231,7 +231,12 @@ var Boleto = function () {
 
   Boleto.prototype.toSVG = function toSVG(selector) {
     var stripes = ITF.encode(this.barcode());
-    new _svg2.default(stripes).render(selector);
+    var svg = new _svg2.default(stripes);
+    if (selector) {
+      svg.render(selector);
+    } else {
+      return svg.render();
+    }
   };
 
   return Boleto;
@@ -388,11 +393,8 @@ var SVG = function () {
 
 
   SVG.prototype.render = function render(selector) {
-    var wrapper = document.querySelector(selector);
+    var wrapper = selector ? document.querySelector(selector) : false;
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-
-    wrapper.appendChild(svg);
-
     var pos = 0;
 
     for (var i = 0; i < this.stripes.length; i++, pos += width) {
@@ -410,6 +412,12 @@ var SVG = function () {
     svg.setAttribute('width', '100%');
     svg.setAttribute('height', '100%');
     svg.setAttribute('viewBox', '0 0 ' + this.viewBoxWidth() + ' 100');
+
+    if (wrapper) {
+      wrapper.appendChild(svg);
+    } else {
+      return new XMLSerializer().serializeToString(svg);
+    }
   };
 
   /**
