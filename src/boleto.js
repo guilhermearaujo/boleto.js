@@ -90,6 +90,7 @@ class Boleto {
     switch (this.barcode().substr(0, 3)) {
       case '001': return 'Banco do Brasil';
       case '033': return 'Santander';
+      case '077': return 'Banco Intermedium';
       case '104': return 'Caixa Econômica Federal';
       case '237': return 'Bradesco';
       case '341': return 'Itaú';
