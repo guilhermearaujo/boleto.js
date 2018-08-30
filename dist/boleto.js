@@ -1,10 +1,10 @@
 /*!
- * boleto.js v1.0.1
+ * boleto.js v1.0.2
  * https://github.com/guilhermearaujo/boleto.js
  *
  * Licensed MIT © Guilherme Araújo
  */
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Boleto = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Boleto = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define([], factory);
@@ -242,28 +242,46 @@ var Boleto = function () {
     switch (this.barcode().substr(0, 3)) {
       case '001':
         return 'Banco do Brasil';
+      case '007':
+        return 'BNDES';
       case '033':
         return 'Santander';
+      case '069':
+        return 'Crefisa';
+      case '077':
+        return 'Banco Inter';
+      case '102':
+        return 'XP Investimentos';
       case '104':
         return 'Caixa Econômica Federal';
+      case '140':
+        return 'Easynvest';
+      case '197':
+        return 'Stone';
+      case '208':
+        return 'BTG Pactual';
+      case '212':
+        return 'Banco Original';
       case '237':
         return 'Bradesco';
+      case '260':
+        return 'Nu Pagamentos';
       case '341':
         return 'Itaú';
-      case '356':
-        return 'Banco Real';
       case '389':
         return 'Banco Mercantil do Brasil';
-      case '399':
-        return 'HSBC';
       case '422':
         return 'Banco Safra';
-      case '453':
-        return 'Banco Rural';
+      case '505':
+        return 'Credit Suisse';
       case '633':
         return 'Banco Rendimento';
       case '652':
-        return 'Unibanco';
+        return 'Itaú Unibanco';
+      case '735':
+        return 'Banco Neon';
+      case '739':
+        return 'Banco Cetelem';
       case '745':
         return 'Citibank';
       default:
