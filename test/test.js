@@ -80,9 +80,29 @@ describe('Boleto.js', function() {
       expect(bankslip.bank()).to.equal('Banco do Brasil');
     });
 
+    it('should return correct BNDES', function() {
+      bankslip.barcode.withArgs().returns('007');
+      expect(bankslip.bank()).to.equal('BNDES');
+    });
+
     it('should return correct Santander', function() {
       bankslip.barcode.withArgs().returns('033');
       expect(bankslip.bank()).to.equal('Santander');
+    });
+
+    it('should return correct Crefisa', function() {
+      bankslip.barcode.withArgs().returns('069');
+      expect(bankslip.bank()).to.equal('Crefisa');
+    });
+
+    it('should return correct Banco Inter', function() {
+      bankslip.barcode.withArgs().returns('077');
+      expect(bankslip.bank()).to.equal('Banco Inter');
+    });
+
+    it('should return correct XP Investimentos', function() {
+      bankslip.barcode.withArgs().returns('102');
+      expect(bankslip.bank()).to.equal('XP Investimentos');
     });
 
     it('should return correct Caixa Econômica Federal', function() {
@@ -90,9 +110,34 @@ describe('Boleto.js', function() {
       expect(bankslip.bank()).to.equal('Caixa Econômica Federal');
     });
 
+    it('should return correct Easynvest', function() {
+      bankslip.barcode.withArgs().returns('140');
+      expect(bankslip.bank()).to.equal('Easynvest');
+    });
+
+    it('should return correct Stone', function() {
+      bankslip.barcode.withArgs().returns('197');
+      expect(bankslip.bank()).to.equal('Stone');
+    });
+
+    it('should return correct BTG Pactual', function() {
+      bankslip.barcode.withArgs().returns('208');
+      expect(bankslip.bank()).to.equal('BTG Pactual');
+    });
+
+    it('should return correct Banco Original', function() {
+      bankslip.barcode.withArgs().returns('212');
+      expect(bankslip.bank()).to.equal('Banco Original');
+    });
+
     it('should return correct Bradesco', function() {
       bankslip.barcode.withArgs().returns('237');
       expect(bankslip.bank()).to.equal('Bradesco');
+    });
+
+    it('should return correct Nu Pagamentos', function() {
+      bankslip.barcode.withArgs().returns('260');
+      expect(bankslip.bank()).to.equal('Nu Pagamentos');
     });
 
     it('should return correct Itaú', function() {
@@ -100,19 +145,9 @@ describe('Boleto.js', function() {
       expect(bankslip.bank()).to.equal('Itaú');
     });
 
-    it('should return correct Banco Real', function() {
-      bankslip.barcode.withArgs().returns('356');
-      expect(bankslip.bank()).to.equal('Banco Real');
-    });
-
     it('should return correct Banco Mercantil do Brasil', function() {
       bankslip.barcode.withArgs().returns('389');
       expect(bankslip.bank()).to.equal('Banco Mercantil do Brasil');
-    });
-
-    it('should return correct HSBC', function() {
-      bankslip.barcode.withArgs().returns('399');
-      expect(bankslip.bank()).to.equal('HSBC');
     });
 
     it('should return correct Banco Safra', function() {
@@ -120,9 +155,9 @@ describe('Boleto.js', function() {
       expect(bankslip.bank()).to.equal('Banco Safra');
     });
 
-    it('should return correct Banco Rural', function() {
-      bankslip.barcode.withArgs().returns('453');
-      expect(bankslip.bank()).to.equal('Banco Rural');
+    it('should return correct Credit Suisse', function() {
+      bankslip.barcode.withArgs().returns('505');
+      expect(bankslip.bank()).to.equal('Credit Suisse');
     });
 
     it('should return correct Banco Rendimento', function() {
@@ -130,9 +165,19 @@ describe('Boleto.js', function() {
       expect(bankslip.bank()).to.equal('Banco Rendimento');
     });
 
-    it('should return correct Unibanco', function() {
+    it('should return correct Itaú Unibanco', function() {
       bankslip.barcode.withArgs().returns('652');
-      expect(bankslip.bank()).to.equal('Unibanco');
+      expect(bankslip.bank()).to.equal('Itaú Unibanco');
+    });
+
+    it('should return correct Banco Neon', function() {
+      bankslip.barcode.withArgs().returns('735');
+      expect(bankslip.bank()).to.equal('Banco Neon');
+    });
+
+    it('should return correct Banco Cetelem', function() {
+      bankslip.barcode.withArgs().returns('739');
+      expect(bankslip.bank()).to.equal('Banco Cetelem');
     });
 
     it('should return correct Citibank', function() {

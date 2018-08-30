@@ -89,17 +89,26 @@ class Boleto {
   bank() {
     switch (this.barcode().substr(0, 3)) {
       case '001': return 'Banco do Brasil';
+      case '007': return 'BNDES';
       case '033': return 'Santander';
+      case '069': return 'Crefisa';
+      case '077': return 'Banco Inter';
+      case '102': return 'XP Investimentos';
       case '104': return 'Caixa Econômica Federal';
+      case '140': return 'Easynvest';
+      case '197': return 'Stone';
+      case '208': return 'BTG Pactual';
+      case '212': return 'Banco Original';
       case '237': return 'Bradesco';
+      case '260': return 'Nu Pagamentos';
       case '341': return 'Itaú';
-      case '356': return 'Banco Real';
       case '389': return 'Banco Mercantil do Brasil';
-      case '399': return 'HSBC';
       case '422': return 'Banco Safra';
-      case '453': return 'Banco Rural';
+      case '505': return 'Credit Suisse';
       case '633': return 'Banco Rendimento';
-      case '652': return 'Unibanco';
+      case '652': return 'Itaú Unibanco';
+      case '735': return 'Banco Neon';
+      case '739': return 'Banco Cetelem';
       case '745': return 'Citibank';
       default:    return 'Unknown';
     }
