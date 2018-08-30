@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>boleto.js</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="The easiest way to display your barcodes">
+    <meta name="keywords" content="boleto.js boletojs boleto bancário bank slip bankslip pagamento payment javascript">
+
+    <meta property="og:title" content="boleto.js" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://guilhermearaujo.me/boleto.js/" />
+    <meta property="og:image" content="http://guilhermearaujo.me/boleto.js/assets/images/opengraph.png" />
+    <meta property="og:site_name" content="boleto.js" />
+    <meta property="og:description" content="The easiest way to display your barcodes" />
+
+    <link rel="canonical" href="http://guilhermearaujo.me/boleto.js/">
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/highlight/github-gist.css">
+  </head>
+  <body>
+    <div id="wrapper">
+      <header id="header" class="alt">
+        <h1>boleto.js</h1>
+      </header>
+
+      <nav id="nav">
+        <ul>
+          <li><a href="#intro" class="active">Introduction</a></li>
+          <li><a href="#install">Installation</a></li>
+          <li><a href="#usage">Usage</a></li>
+          <li><a href="#demo">Demo</a></li>
+        </ul>
+      </nav>
+
+      <div id="main">
+        <section id="intro" class="main">
+          <div class="content">
+            <header class="major">
+              <h2>Introduction</h2>
+            </header>
+
+            <p>
+              In Brazil, there is a very commonly used payment method used for online purchases called <a href="https://en.wikipedia.org/wiki/Boleto">Boleto Bancário</a>, or bank slip.
+              When a web-store issues a bank slip, they often display the document entirely (a full A4 page) for the customer to print and take to a bank or post office to be paid.
+            </p>
+
+            <p>
+              Over the past few years, technology has evolved to the point where we can now simply use our smartphones to scan the bank slip's barcode and pay it immediately. There is no longer the need to have the entire document on-screen. We could display the only thing that matters: the barcode.
+            </p>
+
+            <p>
+              This is where <strong>boleto.js</strong> comes in handy, generating barcodes using <a href="https://www.w3.org/Graphics/SVG/">SVG</a>
+              that provide maximum sharpness in screens of any resolution or pixel density.
+            </p>
+          </div>
+        </section>
+
+        <section id="install" class="main">
+          <header class="major">
+            <h2>Installation</h2>
+            <p>You can download <strong>boleto.js</strong> using npm, Bower or you can get its code.</p>
+          </header>
+
+          <h3><span class="icon minor style1 fa-code"></span> Using package managers</h3>
+          <p><pre class="snippet"><code class="bash">npm install boleto.js --save</code></pre></p>
+          <p><pre class="snippet"><code class="bash">bower install boleto.js</code></pre></p>
+
+          <p>&nbsp;</p>
+
+          <h3><span class="icon minor style3 fa-github"></span> <a href="https://github.com/guilhermearaujo/boleto.js">Download the source from Github</a></h3>
+        </section>
+
+        <section id="usage" class="main">
+          <header class="major">
+            <h2>Usage</h2>
+          </header>
+
+          <h3>Basic</h3>
+          <p class="content">
+            Include the library in your code
+            <pre class="snippet"><code class="html">&lt;script src="dist/boleto.min.js"&gt;&lt;/script&gt;</code></pre>
+          </p>
+
+          <p class="content">
+            Include the library in your code
+            <pre class="snippet"><code class="html">&lt;div id="boleto"&gt;&lt;/div&gt;</code></pre>
+          </p>
+
+          <p class="content">
+            And finally add the code to render the barcode
+            <pre class="snippet"><code class="html">&lt;script&gt;
+  var number = '34195000080123320318964221470004584410000002000';
+  new Boleto(number).toSVG('#boleto');
+&lt;/script&gt;</code></pre>
+          </p>
+
+          <p>&nbsp;</p>
+
+          <h3>Alternative Usage</h3>
+          <p class="content">
+            Instead of appending the SVG to the source code, you can store it in a variable. To do so, simply do not provide a CSS selector when generating the SVG:
+            <pre class="snippet"><code class="html">&lt;script&gt;
+  var number = '34195000080123320318964221470004584410000002000';
+  // Data will be stored in a variable
+  var boleto = new Boleto(number).toSVG();
+&lt;/script&gt;</code></pre>
+          </p>
+
+          <p>&nbsp;</p>
+
+          <h3>Extra Features</h3>
+
+          <p class="content"><strong>boleto.js</strong> also provides a number of methods to help you display more information about the bank slip.</p>
+
+          <p class="content">
+            Bank slip number (raw):
+            <pre class="snippet"><code class="javascript">boleto.number();<br />// 34195000080123320318964221470004584410000002000</code></pre>
+            Bank slip number (formatted):
+            <pre class="snippet"><code class="javascript">boleto.prettyNumber();<br />// 34195.00008 01233.203189 64221.470004 5 84410000002000</code></pre>
+            Barcode number:
+            <pre class="snippet"><code class="javascript">boleto.barcode();<br />// 34195844100000020005000001233203186422147000</code></pre>
+            Barcode checksum digit:
+            <pre class="snippet"><code class="javascript">boleto.checksum();<br />// 5</code></pre>
+            Nominal amount:
+            <pre class="snippet"><code class="javascript">boleto.amount();<br />// 20.00</code></pre>
+            Formatted amount:
+            <pre class="snippet"><code class="javascript">boleto.prettyAmount();<br />// R$ 20,00</code></pre>
+            Bank name:
+            <pre class="snippet"><code class="javascript">boleto.bank();<br />// Itaú</code></pre>
+            Currency:
+            <pre class="snippet"><code class="javascript">boleto.currency();<br />// { code: 'BRL', symbol: 'R$', decimal: ',' }</code></pre>
+            Expiration date:
+            <pre class="snippet"><code class="javascript">boleto.expirationDate();<br />// Sun Nov 15 2020 22:00:00 GMT-0200 (BRST)</code></pre>
+          </p>
+        </section>
+
+        <section id="demo" class="main">
+          <header class="major">
+            <h2>Demo</h2>
+            <p>Try for yourself! Use your bank's mobile app to scan the code below. Or enter your own bank slip number.</p>
+          </header>
+
+          <form id="generator" action="javascript:generate();">
+            <input type="text" name="number" value="34195.00008 01233.203189 64221.470004 5 84410000002000">
+            <button type="submit" class="button fa fa-refresh"></button>
+          </form>
+
+          <div id="demo-svg"></div>
+
+          <table id="info">
+            <tr>
+              <th>Number</td>
+              <td id="number"></td>
+            </tr>
+            <tr>
+              <th>Number (pretty)</td>
+              <td id="pretty-number"></td>
+            </tr>
+            <tr>
+              <th>Amount</td>
+              <td id="amount"></td>
+            </tr>
+            <tr>
+              <th>Amount (pretty)</td>
+              <td id="pretty-amount"></td>
+            </tr>
+            <tr>
+              <th>Expiration</td>
+              <td id="expiration-date"></td>
+            </tr>
+            <tr>
+              <th>Bank</td>
+              <td id="bank"></td>
+            </tr>
+            <tr>
+              <th>Currency</td>
+              <td id="currency"></td>
+            </tr>
+            <tr>
+              <th>Barcode</td>
+              <td id="barcode"></td>
+            </tr>
+            <tr>
+              <th>Checksum</th>
+              <td id="checksum"></td>
+            </tr>
+          </table>
+        </section>
+      </div>
+
+      <footer id="footer">
+        <p class="copyright">Made by <a href="http://guilhermearaujo.me" target="_blank">Guilherme Araújo</a> for 🇧🇷 under the <a href="license.html">MIT license</a>.</p>
+        <p class="copyright">Design by <a href="http://html5up.net" target="_blank">HTML5 UP</a> under the <a href="http://html5up.net/license" target="_blank">CCA 3.0 license</a> (modified).</p>
+      </footer>
+    </div>
+
+    <script src="assets/js/clipboard.min.js"></script>
+    <script src="assets/js/highlight.pack.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.mask.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/snippets.js"></script>
+    <script src="assets/js/tooltips.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="../dist/boleto.min.js"></script>
+    <script src="assets/js/demo.js"></script>
+  </body>
+</html>
