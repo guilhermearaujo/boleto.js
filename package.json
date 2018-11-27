@@ -27,6 +27,9 @@
     "url": "https://github.com/guilhermearaujo/boleto.js/issues"
   },
   "homepage": "https://github.com/guilhermearaujo/boleto.js#readme",
+  "dependencies": {
+    "xmlserializer": "^0.6.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.5.1",
     "babel-core": "^6.5.2",
@@ -44,7 +47,6 @@
     "rewire": "^2.5.2",
     "sinon": "^1.17.6",
     "uglify-js": "^2.4.24",
-    "watchify": "^3.4.0",
-    "xmlserializer": "^0.6.0"
+    "watchify": "^3.4.0"
   }
 }
