@@ -2,7 +2,10 @@
   "name": "boleto.js",
   "version": "1.0.2",
   "description": "Renderizador de código de barras para boletos bancários",
-  "main": "src/boleto.js",
+  "main": "lib/boleto.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "npm run build-debug && npm run build-min",
     "build-debug": "browserify src/boleto.js -s Boleto -t [babelify] -p [browserify-banner --file .banner ] -o dist/boleto.js",
