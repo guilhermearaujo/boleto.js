@@ -8,6 +8,7 @@ module.exports = {
   },
   output: {
     filename: 'boleto.js',
-    path: path.resolve(__dirname, 'lib')
+    path: path.resolve(__dirname, 'lib'),
+    library: 'Boleto'
   },
 };
