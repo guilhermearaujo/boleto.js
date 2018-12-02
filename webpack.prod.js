@@ -5,6 +5,7 @@ module.exports = {
   mode: 'production',
   output: {
     filename: 'boleto.min.js',
-    path: path.resolve(__dirname, 'lib')
+    path: path.resolve(__dirname, 'lib'),
+    library: 'Boleto'
   },
 };
