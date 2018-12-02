@@ -6,7 +6,7 @@
   "scripts": {
     "build-dev": "webpack --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "test": "istanbul cover _mocha -- --reporter spec --require jsdom-global/register --compilers js:babel-core/register"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -28,14 +28,11 @@
     "xmlserializer": "^0.6.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
     "codeclimate-test-reporter": "^0.4.0",
-    "istanbul": "^1.1.0-alpha",
+    "jasmine": "^3.3.0",
+    "jest": "^23.6.0",
     "jsdom": "9.6.0",
     "jsdom-global": "2.1.0",
-    "mocha": "^3.1.0",
-    "rewire": "^2.5.2",
-    "sinon": "^1.17.6",
     "webpack": "^4.26.1",
     "webpack-cli": "^3.1.2"
   }

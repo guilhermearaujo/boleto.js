@@ -1,6 +1,6 @@
-import SVG from './svg';
-
+var SVG = require('./svg');
 var ITF = require('./itf');
+var { modulo11 } = require('./helpers');
 
 class Boleto {
   /**
@@ -193,35 +193,6 @@ class Boleto {
     var stripes = ITF.encode(this.barcode());
     return new SVG(stripes).render(selector);
   }
-}
-
-/**
- * Calculates the modulo 11 checksum digit
- *
- * The specifications of the algorithm can be found at
- * https://portal.febraban.org.br/pagina/3166/33/pt-br/layour-arrecadacao
- *
- * @params {Array|String} digits
- * @return {Integer} The modulo 11 checksum digit
- *
- * @example
- * // Returns 7
- * modulo11('123456789');
- */
-function modulo11(digits) {
-  if (typeof digits === 'string') {
-    digits = digits.split('');
-  }
-
-  digits.reverse();
-
-  var sum = 0;
-
-  for (var i = 0; i < digits.length; i++) {
-    sum += (i % 8 + 2) * digits[i];
-  }
-
-  return (11 - (sum % 11)) % 10 || 1;
 }
 
 module.exports = Boleto;
