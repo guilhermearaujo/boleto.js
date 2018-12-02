@@ -4,7 +4,7 @@
  * The specifications of the algorithm can be found at
  * https://portal.febraban.org.br/pagina/3166/33/pt-br/layour-arrecadacao
  *
- * @params {Array|String} digits
+ * @params {Array|String} number
  * @return {Integer} The modulo 11 checksum digit
  *
  * @example
