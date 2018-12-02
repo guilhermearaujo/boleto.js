@@ -1,7 +1,7 @@
 {
   "name": "boleto.js",
   "description": "Renderizador de código de barras para boletos bancários",
-  "main": "dist/boleto.js",
+  "main": "lib/boleto.min.js",
   "authors": [
     "Guilherme Araújo <guilhermeama@gmail.com> (https://github.com/guilhermearaujo)"
   ],
