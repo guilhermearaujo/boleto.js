@@ -1,4 +1,4 @@
-var xmlserializer = require('xmlserializer');
+const xmlserializer = require('xmlserializer');
 
 class SVG {
   /**
@@ -9,7 +9,7 @@ class SVG {
    * @param {Integer} stripeWidth The width of a single-weighted stripe
    */
   constructor(stripes, stripeWidth) {
-    this.stripes = stripes.split('').map(function(a) { return parseInt(a, 10); });
+    this.stripes = stripes.split('').map(a => parseInt(a, 10));
     this.stripeWidth = stripeWidth || 4;
   }
 
@@ -25,16 +25,17 @@ class SVG {
    * appended
    */
   render(selector) {
-    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    var pos = 0;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    let pos = 0;
+    let width = 0;
 
-    for (var i = 0; i < this.stripes.length; i++, pos += width) {
-      var width = this.stripeWidth * this.stripes[i];
+    for (let i = 0; i < this.stripes.length; i += 1, pos += width) {
+      width = this.stripeWidth * this.stripes[i];
 
-      var shape = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      const shape = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
       shape.setAttribute('width', width);
       shape.setAttribute('height', 100);
-      shape.setAttribute('fill', this.color(i));
+      shape.setAttribute('fill', SVG.color(i));
       shape.setAttribute('x', pos);
       shape.setAttribute('y', 0);
       svg.appendChild(shape);
@@ -42,13 +43,14 @@ class SVG {
 
     svg.setAttribute('width', '100%');
     svg.setAttribute('height', '100%');
-    svg.setAttribute('viewBox', '0 0 ' + this.viewBoxWidth() + ' 100');
+    svg.setAttribute('viewBox', `0 0 ${this.viewBoxWidth()} 100`);
 
     if (selector === undefined) {
       return xmlserializer.serializeToString(svg);
-    } else {
-      document.querySelector(selector).appendChild(svg);
     }
+
+    document.querySelector(selector).appendChild(svg);
+    return null;
   }
 
   /**
@@ -60,7 +62,7 @@ class SVG {
    * @return {Integer} The width of a view box that fits the barcode
    */
   viewBoxWidth() {
-    return this.stripes.reduce(function(a, b) { return a + b; }, 0) * this.stripeWidth;
+    return this.stripes.reduce((a, b) => a + b, 0) * this.stripeWidth;
   }
 
   /**
@@ -77,7 +79,7 @@ class SVG {
    * // Returns "#000000"
    * svg.color(2);
    */
-  color(i) {
+  static color(i) {
     return i % 2 ? '#ffffff' : '#000000';
   }
 }

@@ -18,7 +18,7 @@ const WEIGHTS = [
   '12211', // 6
   '11122', // 7
   '21121', // 8
-  '12121'  // 9
+  '12121', // 9
 ];
 
 /**
@@ -38,6 +38,30 @@ const START = '1111';
 const STOP = '211';
 
 /**
+ * Converts a pair of digits into their ITF representation and interleave them
+ *
+ * @param {String} pair The pair to be interleaved
+ * @return {String} The input pair encoded into its ITF representation
+ *
+ * @example
+ * // Returns "1211212112"
+ * ITF.interleavePair('01');
+ */
+function interleavePair(pair) {
+  const black = WEIGHTS[Math.floor(pair / 10)];
+  const white = WEIGHTS[pair % 10];
+
+  let p = '';
+
+  for (let i = 0; i < 5; i += 1) {
+    p += black[i];
+    p += white[i];
+  }
+
+  return p;
+}
+
+/**
  * Encodes a base-10 number into its Interleaved 2 of 5 (ITF) representation
  *
  * @param {String} number The number to be encoded
@@ -49,31 +73,6 @@ const STOP = '211';
  */
 function encode(number) {
   return START + number.match(/(..?)/g).map(interleavePair).join('') + STOP;
-}
-
-/**
- * Converts a pair of digits into their ITF representation and interleave them
- *
- * @param {String} pair The pair to be interleaved
- * @return {String} The input pair encoded into its ITF representation
- *
- * @example
- * // Returns "1211212112"
- * ITF.interleavePair('01');
- */
-function interleavePair(pair) {
-
-  var black = WEIGHTS[Math.floor(pair / 10)];
-  var white = WEIGHTS[pair % 10];
-
-  var p = '';
-
-  for (var i = 0; i < 5; i++) {
-    p += black[i];
-    p += white[i];
-  }
-
-  return p;
 }
 
 module.exports = { encode };
