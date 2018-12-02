@@ -2,7 +2,7 @@
   "name": "boleto.js",
   "version": "1.0.2",
   "description": "Renderizador de código de barras para boletos bancários",
-  "main": "src/boleto.js",
+  "main": "lib/boleto.min.js",
   "scripts": {
     "build-dev": "webpack --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
