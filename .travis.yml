@@ -16,6 +16,7 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
+  - if [[ `npm -v` > 6* ]]; then npm audit; fi
   - npm run lint
   - npm run test
 after_script:

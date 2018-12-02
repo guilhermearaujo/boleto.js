@@ -34,8 +34,8 @@
     "eslint-plugin-import": "^2.14.0",
     "jasmine": "^3.3.0",
     "jest": "^23.6.0",
-    "jsdom": "9.6.0",
-    "jsdom-global": "2.1.0",
+    "jsdom": "^13.0.0",
+    "jsdom-global": "^3.0.0",
     "webpack": "^4.26.1",
     "webpack-cli": "^3.1.2"
   }
