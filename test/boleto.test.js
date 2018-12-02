@@ -226,7 +226,7 @@ describe('Boleto.js', () => {
 
     it('should render the SVG', () => {
       spyOn(document, 'querySelector').and.returnValue(wrapper);
-      expect(bankslip.toSVG('#fake-wrapper')).toBeUndefined();
+      expect(bankslip.toSVG('#fake-wrapper')).toBeNull();
     });
   });
 });

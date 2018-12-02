@@ -59,8 +59,8 @@ describe('svg.js', () => {
 
   describe('#color()', () => {
     it('should return, in hex, white for odd and black for even numbers', () => {
-      expect(svg.color(1)).toBe('#ffffff');
-      expect(svg.color(2)).toBe('#000000');
+      expect(SVG.color(1)).toBe('#ffffff');
+      expect(SVG.color(2)).toBe('#000000');
     });
   });
 });

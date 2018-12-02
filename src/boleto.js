@@ -1,6 +1,6 @@
-var SVG = require('./svg');
-var ITF = require('./itf');
-var { modulo11 } = require('./helpers');
+const SVG = require('./svg');
+const ITF = require('./itf');
+const { modulo11 } = require('./helpers');
 
 class Boleto {
   /**
@@ -30,8 +30,8 @@ class Boleto {
   valid() {
     if (this.bankSlipNumber.length !== 47) return false;
 
-    var barcodeDigits = this.barcode().split('');
-    var checksum = barcodeDigits.splice(4, 1);
+    const barcodeDigits = this.barcode().split('');
+    const checksum = barcodeDigits.splice(4, 1);
 
     return (modulo11(barcodeDigits).toString() === checksum.toString());
   }
@@ -49,7 +49,7 @@ class Boleto {
   barcode() {
     return this.bankSlipNumber.replace(
       /^(\d{4})(\d{5})\d{1}(\d{10})\d{1}(\d{10})\d{1}(\d{15})$/,
-      '$1$5$2$3$4'
+      '$1$5$2$3$4',
     );
   }
 
@@ -71,7 +71,7 @@ class Boleto {
   prettyNumber() {
     return this.bankSlipNumber.replace(
       /^(\d{5})(\d{5})(\d{5})(\d{6})(\d{5})(\d{6})(\d{1})(\d{14})$/,
-      '$1.$2 $3.$4 $5.$6 $7 $8'
+      '$1.$2 $3.$4 $5.$6 $7 $8',
     );
   }
 
@@ -110,7 +110,7 @@ class Boleto {
       case '735': return 'Banco Neon';
       case '739': return 'Banco Cetelem';
       case '745': return 'Citibank';
-      default:    return 'Unknown';
+      default: return 'Unknown';
     }
   }
 
@@ -125,7 +125,7 @@ class Boleto {
   currency() {
     switch (this.barcode()[3]) {
       case '9': return { code: 'BRL', symbol: 'R$', decimal: ',' };
-      default:  return 'Unknown';
+      default: return 'Unknown';
     }
   }
 
@@ -151,8 +151,8 @@ class Boleto {
    * @return {Date} The expiration date of the bank slip
    */
   expirationDate() {
-    var refDate = new Date('1997-10-07');
-    var days = this.barcode().substr(5, 4);
+    const refDate = new Date('1997-10-07');
+    const days = this.barcode().substr(5, 4);
 
     return new Date(refDate.getTime() + days * 86400000);
   }
@@ -172,13 +172,13 @@ class Boleto {
    * @return {String} The bank slip's formatted amount
    */
   prettyAmount() {
-    var currency = this.currency();
+    const currency = this.currency();
 
     if (currency === 'Unknown') {
       return this.amount();
     }
 
-    return currency.symbol + ' ' + this.amount().replace('.', currency.decimal);
+    return `${currency.symbol} ${this.amount().replace('.', currency.decimal)}`;
   }
 
   /**
@@ -190,7 +190,7 @@ class Boleto {
    * @see {@link SVG#render}
    */
   toSVG(selector) {
-    var stripes = ITF.encode(this.barcode());
+    const stripes = ITF.encode(this.barcode());
     return new SVG(stripes).render(selector);
   }
 }
