@@ -40,7 +40,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
     "jasmine": "^3.3.1",
-    "jest": "^24.1.0",
+    "jest": "^24.5.0",
     "jsdom": "^13.2.0",
     "jsdom-global": "^3.0.0",
     "webpack": "^4.29.3",
