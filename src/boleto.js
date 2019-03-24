@@ -154,7 +154,7 @@ class Boleto {
     const refDate = new Date('1997-10-07');
     const days = this.barcode().substr(5, 4);
 
-    return new Date(refDate.getTime() + days * 86400000);
+    return new Date(refDate.getTime() + (days * 86400000));
   }
 
   /**
