@@ -10,7 +10,7 @@
   "scripts": {
     "build-dev": "webpack --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "lint": "eslint --cache src/**/*.js",
+    "lint": "eslint --cache src/ test/ *.js",
     "test": "jest"
   },
   "repository": {

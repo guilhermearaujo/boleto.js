@@ -8,8 +8,6 @@ describe('Boleto.js', () => {
 
   describe('#constructor()', () => {
     it('should return a valid Boleto object when a valid bankslip code is passed', () => {
-      const bankslip = new Boleto(validBankslipNumber);
-
       expect(bankslip.bankSlipNumber).toBe(validBankslipNumber);
     });
 
@@ -52,8 +50,6 @@ describe('Boleto.js', () => {
   });
 
   describe('#bank()', () => {
-    const bankslip = new Boleto(validBankslipNumber);
-
     it('should return correct Banco do Brasil', () => {
       spyOn(bankslip, 'barcode').and.returnValue('001');
       expect(bankslip.bank()).toBe('Banco do Brasil');
@@ -171,8 +167,6 @@ describe('Boleto.js', () => {
   });
 
   describe('#currency()', () => {
-    const bankslip = new Boleto(validBankslipNumber);
-
     it('should return BRL', () => {
       spyOn(bankslip, 'barcode').and.returnValue('xxx9');
       expect(bankslip.currency()).toEqual({ code: 'BRL', symbol: 'R$', decimal: ',' });
@@ -203,8 +197,6 @@ describe('Boleto.js', () => {
   });
 
   describe('#prettyAmount()', () => {
-    const bankslip = new Boleto(validBankslipNumber);
-
     it('should return the correct, formatted amount in BRL', () => {
       spyOn(bankslip, 'barcode').and.returnValue('xxx9xxxxx0000002000');
       expect(bankslip.prettyAmount()).toBe('R$ 20,00');
@@ -219,9 +211,7 @@ describe('Boleto.js', () => {
   describe('#toSVG()', () => {
     const wrapper = {
       children: [],
-      appendChild: function(child) {
-        this.children.push(child);
-      }
+      appendChild: child => wrapper.children.push(child),
     };
 
     it('should render the SVG', () => {
