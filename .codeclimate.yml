@@ -4,12 +4,12 @@
      enabled: true
      config:
        languages:
-       - javascript
+         - javascript
    eslint:
      enabled: true
    fixme:
      enabled: true
  exclude_paths:
- - docs/
- - lib/
- - test/
+   - docs/
+   - lib/
+   - test/
