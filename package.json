@@ -33,17 +33,17 @@
     "xmlserializer": "^0.6.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
-    "babel-loader": "^8.0.5",
-    "eslint": "^5.15.3",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0",
-    "jasmine": "^3.3.1",
-    "jest": "^24.5.0",
-    "jsdom": "^14.0.0",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-loader": "^8.0.6",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "jasmine": "^3.4.0",
+    "jest": "^24.9.0",
+    "jsdom": "^14.1.0",
     "jsdom-global": "^3.0.0",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0"
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7"
   }
 }
