@@ -1,6 +1,7 @@
 # boleto.js
 
 [![npm version](https://badge.fury.io/js/boleto.js.svg)](https://badge.fury.io/js/boleto.js)
+![Build Status](https://github.com/guilhermearaujo/boleto.js/workflows/CI/badge.svg)
 [![Code Climate](https://codeclimate.com/github/guilhermearaujo/boleto.js/badges/gpa.svg)](https://codeclimate.com/github/guilhermearaujo/boleto.js)
 [![Test Coverage](https://codeclimate.com/github/guilhermearaujo/boleto.js/badges/coverage.svg)](https://codeclimate.com/github/guilhermearaujo/boleto.js/coverage)
 [![Inline docs](http://inch-ci.org/github/guilhermearaujo/boleto.js.svg?branch=master)](http://inch-ci.org/github/guilhermearaujo/boleto.js)
