@@ -15,7 +15,7 @@ describe('svg.js', () => {
     let wrapper;
     const fakeWrapper = () => ({
       children: [],
-      appendChild: child => wrapper.children.push(child),
+      appendChild: (child) => wrapper.children.push(child),
     });
 
     beforeEach(() => {

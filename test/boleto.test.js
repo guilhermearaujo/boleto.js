@@ -211,7 +211,7 @@ describe('Boleto.js', () => {
   describe('#toSVG()', () => {
     const wrapper = {
       children: [],
-      appendChild: child => wrapper.children.push(child),
+      appendChild: (child) => wrapper.children.push(child),
     };
 
     it('should render the SVG', () => {
