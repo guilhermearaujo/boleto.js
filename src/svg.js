@@ -9,7 +9,7 @@ class SVG {
    * @param {Integer} stripeWidth The width of a single-weighted stripe
    */
   constructor(stripes, stripeWidth) {
-    this.stripes = stripes.split('').map(a => parseInt(a, 10));
+    this.stripes = stripes.split('').map((a) => parseInt(a, 10));
     this.stripeWidth = stripeWidth || 4;
   }
 
