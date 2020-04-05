@@ -11,7 +11,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 13
 
       - name: Cache node modules
         uses: actions/cache@v1
@@ -33,7 +33,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 13
 
       - name: Cache node modules
         uses: actions/cache@v1
@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [8, 9, 10, 11, 12]
+        node: [9, 10, 11, 12, 13]
     steps:
       - uses: actions/checkout@v1
 
