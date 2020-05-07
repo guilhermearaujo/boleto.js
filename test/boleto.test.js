@@ -186,7 +186,7 @@ describe('Boleto.js', () => {
 
   describe('#expirationDate()', () => {
     it('should return correct expiration date', () => {
-      expect(bankslip.expirationDate()).toEqual(new Date('2020-11-16'));
+      expect(bankslip.expirationDate()).toEqual(new Date('2020-11-16 12:00:00 GMT-0300'));
     });
   });
 
