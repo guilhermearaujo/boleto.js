@@ -151,7 +151,7 @@ class Boleto {
    * @return {Date} The expiration date of the bank slip
    */
   expirationDate() {
-    const refDate = new Date('1997-10-07 12:00:00 GMT-0300');
+    const refDate = new Date(876236400000); // 1997-10-07 12:00:00 GMT-0300
     const days = this.barcode().substr(5, 4);
 
     return new Date(refDate.getTime() + (days * 86400000));
