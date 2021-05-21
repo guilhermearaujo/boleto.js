@@ -102,6 +102,7 @@ class Boleto {
       case '237': return 'Bradesco';
       case '260': return 'Nu Pagamentos';
       case '341': return 'Itaú';
+      case '364': return 'Gerencianet';
       case '389': return 'Banco Mercantil do Brasil';
       case '422': return 'Banco Safra';
       case '505': return 'Credit Suisse';
