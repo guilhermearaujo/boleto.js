@@ -20,7 +20,7 @@ describe('svg.js', () => {
 
     beforeEach(() => {
       wrapper = fakeWrapper();
-      spyOn(document, 'querySelector').and.returnValue(wrapper);
+      document.querySelector = jest.fn().mockReturnValue(wrapper);
       svg.render('#fake-wrapper');
     });
 
