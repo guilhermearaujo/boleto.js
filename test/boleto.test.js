@@ -50,142 +50,38 @@ describe('Boleto.js', () => {
   });
 
   describe('#bank()', () => {
-    it('should return correct Banco do Brasil', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('001');
-      expect(bankslip.bank()).toBe('Banco do Brasil');
-    });
+    const banks = [
+      { code: '001', name: 'Banco do Brasil' },
+      { code: '007', name: 'BNDES' },
+      { code: '033', name: 'Santander' },
+      { code: '069', name: 'Crefisa' },
+      { code: '077', name: 'Banco Inter' },
+      { code: '102', name: 'XP Investimentos' },
+      { code: '104', name: 'Caixa Econômica Federal' },
+      { code: '140', name: 'Easynvest' },
+      { code: '197', name: 'Stone' },
+      { code: '208', name: 'BTG Pactual' },
+      { code: '212', name: 'Banco Original' },
+      { code: '237', name: 'Bradesco' },
+      { code: '260', name: 'Nu Pagamentos' },
+      { code: '341', name: 'Itaú' },
+      { code: '389', name: 'Banco Mercantil do Brasil' },
+      { code: '422', name: 'Banco Safra' },
+      { code: '505', name: 'Credit Suisse' },
+      { code: '633', name: 'Banco Rendimento' },
+      { code: '652', name: 'Itaú Unibanco' },
+      { code: '735', name: 'Banco Neon' },
+      { code: '739', name: 'Banco Cetelem' },
+      { code: '745', name: 'Citibank' },
+      { code: '999', name: 'Unknown' },
+    ];
 
-    it('should return correct BNDES', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('007');
-      expect(bankslip.bank()).toBe('BNDES');
-    });
-
-    it('should return correct Santander', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('033');
-      expect(bankslip.bank()).toBe('Santander');
-    });
-
-    it('should return correct Crefisa', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('069');
-      expect(bankslip.bank()).toBe('Crefisa');
-    });
-
-    it('should return correct Banco Inter', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('077');
-      expect(bankslip.bank()).toBe('Banco Inter');
-    });
-
-    it('should return correct XP Investimentos', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('102');
-      expect(bankslip.bank()).toBe('XP Investimentos');
-    });
-
-    it('should return correct Caixa Econômica Federal', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('104');
-      expect(bankslip.bank()).toBe('Caixa Econômica Federal');
-    });
-
-    it('should return correct Easynvest', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('140');
-      expect(bankslip.bank()).toBe('Easynvest');
-    });
-
-    it('should return correct Stone', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('197');
-      expect(bankslip.bank()).toBe('Stone');
-    });
-
-    it('should return correct BTG Pactual', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('208');
-      expect(bankslip.bank()).toBe('BTG Pactual');
-    });
-
-    it('should return correct Banco Original', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('212');
-      expect(bankslip.bank()).toBe('Banco Original');
-    });
-
-    it('should return correct Bradesco', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('237');
-      expect(bankslip.bank()).toBe('Bradesco');
-    });
-
-    it('should return correct Nu Pagamentos', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('260');
-      expect(bankslip.bank()).toBe('Nu Pagamentos');
-    });
-
-    it('should return correct Itaú', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('341');
-      expect(bankslip.bank()).toBe('Itaú');
-    });
-
-    it('should return correct Banco Mercantil do Brasil', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('389');
-      expect(bankslip.bank()).toBe('Banco Mercantil do Brasil');
-    });
-
-    it('should return correct Banco Safra', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('422');
-      expect(bankslip.bank()).toBe('Banco Safra');
-    });
-
-    it('should return correct Credit Suisse', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('505');
-      expect(bankslip.bank()).toBe('Credit Suisse');
-    });
-
-    it('should return correct Banco Rendimento', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('633');
-      expect(bankslip.bank()).toBe('Banco Rendimento');
-    });
-
-    it('should return correct Itaú Unibanco', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('652');
-      expect(bankslip.bank()).toBe('Itaú Unibanco');
-    });
-
-    it('should return correct Banco Neon', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('735');
-      expect(bankslip.bank()).toBe('Banco Neon');
-    });
-
-    it('should return correct Banco Cetelem', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('739');
-      expect(bankslip.bank()).toBe('Banco Cetelem');
-    });
-
-    it('should return correct Citibank', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('745');
-      expect(bankslip.bank()).toBe('Citibank');
-    });
-
-    it('should return correct Unknown', () => {
-      const bankslip = getBankslip();
-      bankslip.barcode = jest.fn().mockReturnValue('999');
-      expect(bankslip.bank()).toBe('Unknown');
+    banks.forEach(({ code, name }) => {
+      it(`should return ${name}`, () => {
+        const bankslip = getBankslip();
+        bankslip.barcode = jest.fn().mockReturnValue(code);
+        expect(bankslip.bank()).toBe(name);
+      });
     });
   });
 
