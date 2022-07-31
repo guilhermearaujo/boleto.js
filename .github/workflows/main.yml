@@ -20,10 +20,10 @@ jobs:
           key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Lint
-        run: npm run lint
+        run: yarn lint
 
   deps:
     runs-on: ubuntu-latest
@@ -42,10 +42,10 @@ jobs:
           key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Audit packages
-        run: npm audit
+        run: yarn audit
 
   unit:
     runs-on: ubuntu-latest
@@ -67,7 +67,7 @@ jobs:
           key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Prepare to build
         run: |
@@ -76,9 +76,9 @@ jobs:
           ./cc-test-reporter before-build
 
       - name: Unit tests
-        run: npm run test
+        run: yarn test
 
       - name: Report coverage
         env:
-           CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_ID }}
+          CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_ID }}
         run: ./cc-test-reporter after-build -t lcov --exit-code $?
