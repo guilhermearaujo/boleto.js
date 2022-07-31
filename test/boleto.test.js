@@ -191,8 +191,9 @@ describe('Boleto.js', () => {
 
   describe('#currency()', () => {
     it('should return BRL', () => {
-      getBankslip.barcode = jest.fn().mockReturnValue('xxx9');
-      expect(getBankslip().currency()).toEqual({ code: 'BRL', symbol: 'R$', decimal: ',' });
+      const bankslip = getBankslip();
+      bankslip.barcode = jest.fn().mockReturnValue('xxx9');
+      expect(bankslip.currency()).toEqual({ code: 'BRL', symbol: 'R$', decimal: ',' });
     });
 
     it('should return Unknown', () => {
